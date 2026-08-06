@@ -20,4 +20,14 @@ resource "aws_route_table_association" "private_1" {
 resource "aws_route_table_association" "private_2" {
   subnet_id      = aws_subnet.private_2.id
   route_table_id = aws_route_table.private.id
+
+}
+resource "aws_route_table_association" "private_db_1" {
+  subnet_id      = aws_subnet.private_db_1.id
+  route_table_id = aws_route_table.private_db.id
+}
+
+resource "aws_route_table_association" "private_db_2" {
+  subnet_id      = aws_subnet.private_db_2.id
+  route_table_id = aws_route_table.private_db.id
 }

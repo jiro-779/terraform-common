@@ -24,3 +24,10 @@ resource "aws_route_table" "private" {
     Name = "${var.project_name}-private-rt"
   }
 }
+resource "aws_route_table" "private_db" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "${var.project_name}-private-db-rt"
+  }
+}

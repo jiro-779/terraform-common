@@ -38,3 +38,12 @@ variable "private_subnet_2_cidr" {
   type        = string
   default     = "10.0.12.0/24"
 }
+variable "private_db_subnet_1_cidr" {
+  description = "CIDR block for the first private database subnet"
+  type        = string
+}
+
+variable "private_db_subnet_2_cidr" {
+  description = "CIDR block for the second private database subnet"
+  type        = string
+}

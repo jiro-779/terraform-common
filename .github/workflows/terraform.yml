@@ -1,17 +1,20 @@
-name: Terraform CI
+name: Terraform CI/CD
 
 on:
   push:
     branches:
       - main
-
   pull_request:
     branches:
       - main
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   terraform:
-    name: Terraform Check
+    name: Terraform
     runs-on: ubuntu-latest
 
     steps:
@@ -21,11 +24,24 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::377228489440:role/GitHub-Actions
+          aws-region: eu-north-1
+
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
 
       - name: Terraform Init
-        run: terraform init -backend=false
+        run: terraform init
 
       - name: Terraform Validate
         run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve
